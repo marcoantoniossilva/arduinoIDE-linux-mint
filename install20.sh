@@ -5,10 +5,8 @@
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
 # Data de criação: 25/08/2021
-# Data de atualização: 30/08/2021
-# Versão: 0.03
-# Testado e homologado para a versão do Linux Mint 20.1 Ulyssa e 20.2 Uma x64
-# Testado e homologado para a versão do Arduino IDE v2.0.x BETA e Fritzing v0.9.x
+# Data de atualização: 03/06/2022
+# Versão: 0.10
 #
 # Arduino é uma plataforma de prototipagem eletrônica de hardware livre e de placa única, 
 # projetada com um microcontrolador Atmel AVR com suporte de entrada/saída embutido, uma 
@@ -23,13 +21,7 @@
 # um editor mais moderno e uma interface mais ágil, possui preenchimento automático, 
 # navegação de código e até mesmo um depurador ao vivo.
 #
-# O Fritzing é uma iniciativa de código aberto para desenvolver um software tipo CAD amador 
-# para design de hardware eletrônico, para apoiar designers e artistas prontos para deixar 
-# de experimentar um protótipo e construir um circuito mais permanente com uma Placa de 
-# Circuito Impresso. 
-#
 # Site Oficial do Arduino IDE: https://www.arduino.cc/
-# Site Oficial do Fritzing: https://fritzing.org/
 #
 # Vídeo de instalação da versão do Arduino IDE 1.8.x: https://www.youtube.com/watch?v=n9cRUE3io-Q
 #
@@ -75,11 +67,10 @@ USUARIO=$(echo $USER)
 # opção da variável de ambiente $0: nome do comando ou script digitado
 LOG="$HOME/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando as variáveis de download do Arduino IDE e do Fritzing (Links atualizados no dia 25/08/2021)
+# Declarando a variável de download do Arduino IDE (Link atualizado no dia 25/08/2021)
 ARDUINO="https://downloads.arduino.cc/arduino-ide/arduino-ide_2.0.0-beta.11_Linux_64bit.zip"
-FRITZING="https://github.com/fritzing/fritzing-parts.git"
 #
-# Script de instalação do Arduino IDE 2.0.x e do Fritzing no Linux Mint 20.1 Ulyssa ou 20.2 Uma 
+# Script de instalação do Arduino IDE 2.0.x no Linux Mint 20.1 Ulyssa ou 20.2 Uma 
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # $0 (variável de ambiente do nome do comando)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -88,12 +79,32 @@ echo -e "Início do script $0 em: $(date +%d/%m/%Y-"("%H:%M")")\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Arduino IDE 2.0 BETA e do Fritzing no Linux Mint 20.x\n"
+echo -e "Instalação do Arduino IDE 2.0 BETA no Linux Mint 20.x\n"
 echo -e "Após a instalação do Arduino IDE digitar no console: arduino-20"
-echo -e "Após a instalação do Fritzing localizar na busca indexada por: Fritzing.\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Será necessário digitar a senha do seu usuário: $USUARIO que tem direitos administrativos do sudo.\n"
 sleep 5
+echo -e "Instalando o Arduino IDE 2.0, aguarde...\n"
+#
+echo -e "Verificando a conexão com a Porta TTY (USB) do Arduino, aguarde..."
+# opção do bloco de agrupamento "": Protege uma string, mas reconhece $, \ e ` como especiais
+# opção do bloco de agrupamento $(): Executa comandos numa subshell, retornando o resultado
+# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
+# opção do redirecionar |: Conecta a saída padrão com a entrada padrão de outro comando
+# opção do operador ; (ponto e vírgula): operador que executa vários comandos em sucessão
+# opção da variável de ambiente $?: Código de retorno do último comando executado
+# opção do operador relacional ==: Igual
+if [ "$(sudo lsusb | grep Arduino &>> $LOG ; echo $?)" == "0" ]
+	then
+		echo -e "Arduino: $(sudo lsusb | grep Arduino)"
+		echo -e "Arduino está conectado na Porta USB do seu computador, Pressione <Enter> para continuar.\n"
+		read
+		sleep 5
+	else
+		echo -e "Arduino não está conectado na Porta USB, conecte o Arduino ou verifique a porta"
+		echo -e "USB ou cabo USB, execute novamente esse script."
+		exit 1
+fi
 #
 echo -e "Atualizando o Sources List do Apt, aguarde..."
 	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
@@ -124,28 +135,6 @@ echo -e "Removendo os software desnecessários, aguarde..."
 	sudo apt autoclean -y &>> $LOG
 echo -e "Software desnecessários removidos com sucesso!!!, continuando com o script...\n"
 sleep 5
-#
-echo -e "Instalando o Arduino IDE 2.0 e do Fritzing, aguarde...\n"
-#
-echo -e "Verificando a conexão com a Porta TTY (USB) do Arduino, aguarde..."
-# opção do bloco de agrupamento "": Protege uma string, mas reconhece $, \ e ` como especiais
-# opção do bloco de agrupamento $(): Executa comandos numa subshell, retornando o resultado
-# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-# opção do redirecionar |: Conecta a saída padrão com a entrada padrão de outro comando
-# opção do operador ; (ponto e vírgula): operador que executa vários comandos em sucessão
-# opção da variável de ambiente $?: Código de retorno do último comando executado
-# opção do operador relacional ==: Igual
-if [ "$(sudo lsusb | grep Arduino &>> $LOG ; echo $?)" == "0" ]
-	then
-		echo -e "Arduino: $(sudo lsusb | grep Arduino)"
-		echo -e "Arduino está conectado na Porta USB do seu computador, Pressione <Enter> para continuar.\n"
-		read
-		sleep 5
-	else
-		echo -e "Arduino não está conectado na Porta USB, conecte o Arduino ou verifique a porta"
-		echo -e "USB ou cabo USB, execute novamente esse script."
-		exit 1
-fi
 #
 echo -e "Verificando a conexão com a Porta Dialout do Arduino, aguarde..."
 # opção do bloco de agrupamento "": Protege uma string, mas reconhece $, \ e ` como especiais
@@ -233,31 +222,36 @@ echo -e "Descompactando o Arduino IDE 2.0 BETA no diretório: /opt/arduino20, ag
 		sudo mv -v arduino-*/ /opt/arduino20 &>> $LOG
 	cd - &>> $LOG
 echo -e "Descompactação do Arduino IDE no diretório /opt/arduino feito com sucesso!!!, continuando com o script...\n"
-sleep 5
+echo -e "Criando atalho no desktop..."
 #
-echo -e "Criando o Link Simbólico do Arduino IDE 2.0 BETA no diretório: /bin, aguarde..."
-	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-	# opção do comando ln: -s (symbolic), -v (verbose)
-	# opção do comando cp: -R (recursive), -f (force), -v (verbose)
-	sudo ln -sv /opt/arduino20/arduino-ide /bin/arduino-20 &>> $LOG
-	sudo cp -Rfv icons/ /opt/arduino20/ &>> $LOG
-echo -e "Link Simbólico do Arduino IDE feito com sucesso!!!, continuando com o script...\n"
-sleep 5
+sleep 3
+sudo cp -Rfv icons/ /opt/arduino20/ &>> $LOG
+CAMINHO_ICONE=$(echo /opt/arduino20/icons/256x256/apps/arduino.png)
+
+function montar_atalho(){
+    echo "[Desktop Entry]"
+    echo "Encoding=UTF-8"
+    echo "Icon=$CAMINHO_ICONE"
+    echo "Type=Application"
+    echo "Name=Arduino IDE"
+    echo "Comment=Ambiente de desenvolvimento do Arduino"
+    echo "Exec=arduino-20"
+    echo "StartupNotify=false"
+    echo "Terminal=false"
+}
+
+# Verifica se a área de trabalho do usuário se chama "Desktop" ou "Área de trabalho"
+for DESKTOP_USUARIO in $HOME/Desktop $HOME/Área\ de\ Trabalho;do
+    if [ -d "$DESKTOP_USUARIO" ]; then
+
+		# Quando encontrar a área de trabalho do usuário, cria o atalho
+        montar_atalho > "$DESKTOP_USUARIO"/Arduino20-IDE.desktop
+
+        echo "Atalho criado com sucesso em $DESKTOP_USUARIO"
+    fi
+done
+sleep 3
 #
-echo -e "Instalando o Fritzing, aguarde..."
-	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-	# opção do comando apt: -y (yes)
-	sudo apt install -y fritzing &>> $LOG
-echo -e "Instalação do Fritzing feito com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Clonando o projeto do Fritzing Parts do Github, aguarde..."
-	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-	sudo git clone $FRITZING /usr/share/fritzing/parts &>> $LOG
-echo -e "Projeto do Fritzing Parts clonado com sucesso!!!, continuando com o script...\n"
-sleep 5
-#
-echo -e "Instalação do Arduino IDE 2.0 BETA e do Fritzing feita com Sucesso!!!."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=$(date +%T)

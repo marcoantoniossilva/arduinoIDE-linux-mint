@@ -79,9 +79,9 @@ echo -e "Verificando a conexão com a Porta TTY (USB) do Arduino, aguarde..."
 # opção do operador ; (ponto e vírgula): operador que executa vários comandos em sucessão
 # opção da variável de ambiente $?: Código de retorno do último comando executado
 # opção do operador relacional ==: Igual
-if [ "$(sudo lsusb | grep Arduino &>> $LOG ; echo $?)" == "0" ]
+if [ "$(sudo lsusb | grep HL-340 &>> $LOG ; echo $?)" == "0" ]
 	then
-		echo -e "Arduino: $(sudo lsusb | grep Arduino)"
+		echo -e "Arduino: $(sudo lsusb | grep HL-340)"
 		echo -e "Arduino está conectado na Porta USB do seu computador, Pressione <Enter> para continuar.\n"
 		read
 		sleep 5
@@ -130,16 +130,16 @@ echo -e "Verificando a conexão com a Porta Dialout do Arduino, aguarde..."
 # opção da variável de ambiente $?: Código de retorno do último comando executado
 # opção do operador relacional ==: Igual
 # opção do caractere curinga *: Qualquer coisa
-if [ "$(sudo ls -lh /dev/ttyA* &>> $LOG ; echo $?)" == "0" ]
+if [ "$(sudo ls -lh /dev/ttyUSB* &>> $LOG ; echo $?)" == "0" ]
 	then
-		echo -e "Conexão Dialout: $(sudo ls -lh /dev/ttyACM*)"
+		echo -e "Conexão Dialout: $(sudo ls -lh /dev/ttyUSB*)"
 		echo -e "Conexão com a Porta Dialout do Arduino verificada com sucesso!!!, continuando com o script...\n"
 		#
 		echo -e "Alterando as permissões da Porta Dialout para todos os usuários, aguarde..."
 		# opção do comando chmod: -v (verbose) a (all users), + (added), r (read), w (write)
 		# opção do comando ls: -l (listing), -h (human-readable)
 		# opção do caractere curinga *: Qualquer coisa
-		echo -e "Permissões: $(sudo chmod -v a+rw /dev/ttyACM*)"
+		echo -e "Permissões: $(sudo chmod -v a+rw /dev/ttyUSB*)"
 		echo -e "Permissões alteradas com sucesso!!!, Pressione <Enter> para continuar.\n"
 		read
 		sleep 5
@@ -214,7 +214,6 @@ echo -e "Instalando o Arduino IDE utilizando o script do próprio Arduino, aguar
 	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
 	sudo bash /opt/arduino/install.sh &>> $LOG
 echo -e "Instalação do Arduino IDE feito com sucesso!!!.\n"
-sleep 3
 #
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)

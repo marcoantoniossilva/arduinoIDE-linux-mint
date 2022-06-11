@@ -4,7 +4,7 @@
 # Facebook: facebook.com/ProcedimentosEmTI
 # Facebook: facebook.com/BoraParaPratica
 # YouTube: youtube.com/BoraParaPratica
-# Data de criação: 23/01/2021
+# Data de criação: 25/08/2021
 # Data de atualização: 03/06/2022
 # Versão: 0.10
 #
@@ -17,23 +17,39 @@
 # placas compatíveis com Arduino, mas também, com a ajuda de núcleos de terceiros, outras 
 # placas de desenvolvimento de fornecedores.
 #
+# A nova versão principal do IDE do Arduino é mais rápida e ainda mais poderosa! Além de 
+# um editor mais moderno e uma interface mais ágil, possui preenchimento automático, 
+# navegação de código e até mesmo um depurador ao vivo.
+#
 # Site Oficial do Arduino IDE: https://www.arduino.cc/
 #
-# Testando o Arduino:
-# 01. Arquivo
-#		Exemplos
-#			Exemplos embutidos
-#				01 Basics
-#					Blink
+# Vídeo de instalação da versão do Arduino IDE 1.8.x: https://www.youtube.com/watch?v=n9cRUE3io-Q
 #
-# 02. Ferramentas
-#		Placa
-#			Gerenciador de Placas
-#				Arduino Uno
-#		Porta
-#			Portas Seriais
-#				/dev/tty/ACM0
-#-> Carregar
+# OBSERVAÇÃO IMPORTANTE: Nesse vídeo utilizei os conceitos do Git para clonar o projeto no Linux Mint
+# Ctrl+Alt+t (Atalho do Terminal)
+#		git clone https://github.com/vaamonde/arduino
+#			cd arduino/
+#				bash install20.sh
+#
+# Terminal
+#		arduino-20
+#
+# Arduino IDE 2.0.0 BETA 11
+#	no board selected
+#		Arduino Uno at /dev/ttyACM0
+# 			Arduino AVR Boards [v1.8.3] - (Yes)
+#
+# Arduino IDE 2.0.0 BETA 11
+#	Tools
+#		Board "Arduino Uno"
+#		Port: "/dev/ttyACM0"
+#		Get Board Info
+#
+# File
+#	Examples
+#		01. Basics
+#			Blink
+#				Upload
 #
 # Variável da Data Inicial para calcular o tempo de execução do script (VARIÁVEL MELHORADA)
 # opção do comando date: +%T (Time)
@@ -51,10 +67,10 @@ USUARIO=$(echo $USER)
 # opção da variável de ambiente $0: nome do comando ou script digitado
 LOG="$HOME/$(echo $0 | cut -d'/' -f2)"
 #
-# Declarando a variável de download do Arduino IDE (Link atualizado no dia 03/06/2022)
-ARDUINO="https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz"
+# Declarando a variável de download do Arduino IDE (Link atualizado no dia 25/08/2021)
+ARDUINO="https://downloads.arduino.cc/arduino-ide/arduino-ide_2.0.0-beta.11_Linux_64bit.zip"
 #
-# Script de instalação do Arduino IDE no Linux Mint 20.1 Ulyssa e 20.2 Uma 
+# Script de instalação do Arduino IDE 2.0.x no Linux Mint 20.1 Ulyssa ou 20.2 Uma 
 # opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
 # $0 (variável de ambiente do nome do comando)
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
@@ -63,13 +79,13 @@ echo -e "Início do script $0 em: $(date +%d/%m/%Y-"("%H:%M")")\n" &>> $LOG
 clear
 #
 echo
-echo -e "Instalação do Arduino IDE no Linux Mint 20.x\n"
-echo -e "Após a instalação do Arduino IDE digitar no console ou localizar na busca indexada por: Arduino IDE."
+echo -e "Instalação do Arduino IDE 2.0 BETA no Linux Mint 20.x\n"
+echo -e "Após a instalação do Arduino IDE digitar no console: arduino-20"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Será necessário digitar a senha do seu usuário: $USUARIO que tem direitos administrativos do sudo.\n"
 sleep 5
 #
-echo -e "Instalando o Arduino IDE, aguarde...\n"
+echo -e "Instalando o Arduino IDE 2.0, aguarde...\n"
 #
 echo -e "Verificando a conexão com a Porta TTY (USB) do Arduino, aguarde..."
 # opção do bloco de agrupamento "": Protege uma string, mas reconhece $, \ e ` como especiais
@@ -79,9 +95,9 @@ echo -e "Verificando a conexão com a Porta TTY (USB) do Arduino, aguarde..."
 # opção do operador ; (ponto e vírgula): operador que executa vários comandos em sucessão
 # opção da variável de ambiente $?: Código de retorno do último comando executado
 # opção do operador relacional ==: Igual
-if [ "$(sudo lsusb | grep Arduino &>> $LOG ; echo $?)" == "0" ]
+if [ "$(sudo lsusb | grep HL-340 &>> $LOG ; echo $?)" == "0" ]
 	then
-		echo -e "Arduino: $(sudo lsusb | grep Arduino)"
+		echo -e "Arduino: $(sudo lsusb | grep HL-340)"
 		echo -e "Arduino está conectado na Porta USB do seu computador, Pressione <Enter> para continuar.\n"
 		read
 		sleep 5
@@ -109,7 +125,7 @@ sleep 5
 echo -e "Instalando as dependências desse script, aguarde..."
 	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
 	# opção do comando apt: -y (yes)
-	sudo apt install -y members git vim &>> $LOG
+	sudo apt install -y members git vim unzip &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
@@ -130,16 +146,16 @@ echo -e "Verificando a conexão com a Porta Dialout do Arduino, aguarde..."
 # opção da variável de ambiente $?: Código de retorno do último comando executado
 # opção do operador relacional ==: Igual
 # opção do caractere curinga *: Qualquer coisa
-if [ "$(sudo ls -lh /dev/ttyA* &>> $LOG ; echo $?)" == "0" ]
+if [ "$(sudo ls -lh /dev/ttyUSB* &>> $LOG ; echo $?)" == "0" ]
 	then
-		echo -e "Conexão Dialout: $(sudo ls -lh /dev/ttyACM*)"
+		echo -e "Conexão Dialout: $(sudo ls -lh /dev/ttyUSB*)"
 		echo -e "Conexão com a Porta Dialout do Arduino verificada com sucesso!!!, continuando com o script...\n"
 		#
 		echo -e "Alterando as permissões da Porta Dialout para todos os usuários, aguarde..."
 		# opção do comando chmod: -v (verbose) a (all users), + (added), r (read), w (write)
 		# opção do comando ls: -l (listing), -h (human-readable)
 		# opção do caractere curinga *: Qualquer coisa
-		echo -e "Permissões: $(sudo chmod -v a+rw /dev/ttyACM*)"
+		echo -e "Permissões: $(sudo chmod -v a+rw /dev/ttyUSB*)"
 		echo -e "Permissões alteradas com sucesso!!!, Pressione <Enter> para continuar.\n"
 		read
 		sleep 5
@@ -192,28 +208,49 @@ if [ "$(sudo cat /etc/group | grep dialout &>> $LOG ; echo $?)" == "0" ]
 		exit 1
 fi
 #
-echo -e "Fazendo o download do Arduino IDE do site Oficial, aguarde..."
+echo -e "Fazendo o download do Arduino IDE 2.0 BETA do site Oficial, aguarde..."
 	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
 	# opção do comando wget: -v (verbose), -O (output-document)
-	sudo wget -v -O /tmp/arduino.tar.xz $ARDUINO &>> $LOG
+	sudo wget -v -O /tmp/arduino20.zip $ARDUINO &>> $LOG
 echo -e "Download do Arduino IDE do site Oficial feito com sucesso!!!, continuando com o script...\n"
 sleep 5
 #
-echo -e "Descompactando o Arduino IDE no diretório: /opt/arduino, aguarde..."
+echo -e "Descompactando o Arduino IDE 2.0 BETA no diretório: /opt/arduino20, aguarde..."
 	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-	# opção do comando tar: -J (xz), -x (extract), v (verbose), -f (file)
 	# opção do comando mv: -v (verbose)
 	cd /tmp
-		sudo tar -Jxvf arduino.tar.xz &>> $LOG
-		sudo mv -v arduino-*/ /opt/arduino &>> $LOG
+		sudo unzip arduino20.zip &>> $LOG
+		sudo mv -v arduino-*/ /opt/arduino20 &>> $LOG
 	cd - &>> $LOG
 echo -e "Descompactação do Arduino IDE no diretório /opt/arduino feito com sucesso!!!, continuando com o script...\n"
-sleep 3
+echo -e "Criando atalho no desktop..."
 #
-echo -e "Instalando o Arduino IDE utilizando o script do próprio Arduino, aguarde..."
-	# opção do redirecionador &>>: Redireciona a saída padrão (STDOUT) anexando
-	sudo bash /opt/arduino/install.sh &>> $LOG
-echo -e "Instalação do Arduino IDE feito com sucesso!!!.\n"
+sleep 3
+sudo cp -Rfv icons/ /opt/arduino20/ &>> $LOG
+CAMINHO_ICONE=$(echo /opt/arduino20/icons/256x256/apps/arduino.png)
+
+function montar_atalho(){
+    echo "[Desktop Entry]"
+    echo "Encoding=UTF-8"
+    echo "Icon=$CAMINHO_ICONE"
+    echo "Type=Application"
+    echo "Name=Arduino IDE"
+    echo "Comment=Ambiente de desenvolvimento do Arduino"
+    echo "Exec=arduino-20"
+    echo "StartupNotify=false"
+    echo "Terminal=false"
+}
+
+# Verifica se a área de trabalho do usuário se chama "Desktop" ou "Área de trabalho"
+for DESKTOP_USUARIO in $HOME/Desktop $HOME/Área\ de\ Trabalho;do
+    if [ -d "$DESKTOP_USUARIO" ]; then
+
+		# Quando encontrar a área de trabalho do usuário, cria o atalho
+        montar_atalho > "$DESKTOP_USUARIO"/Arduino20-IDE.desktop
+
+        echo "Atalho criado com sucesso em $DESKTOP_USUARIO"
+    fi
+done
 sleep 3
 #
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)

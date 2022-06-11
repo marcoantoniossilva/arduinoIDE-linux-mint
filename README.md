@@ -1,59 +1,67 @@
-# Curso GRÁTIS de Arduino IDE no Linux Mint 20.x
+# Instalação e configuração do Arduino IDE no Linux Mint
 
-## 💰 Ajude o projeto Bora para Prática a continuar fazendo vídeos e materiais gratuitos para o Canal
-## 💰 Chave PIX do projeto: robsonvaamonde@gmail.com
-## 💰 Link de doação do PagSeguro: https://pag.ae/bjlSJcH
-
-Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/boraparapratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+Projeto adaptado de [Robson Vaamonde](https://github.com/vaamonde/arduino).<br>
 
 ## **Links Oficiais do Arduino IDE e Linux Mint:**
+
 Site do Arduino: https://www.arduino.cc/<br>
 Github do Arduino: https://github.com/arduino<br>
 Site do Linux Mint: https://www.linuxmint.com/​<br>
 
-## **Playlist do YouTUBE com todos os Vídeos do Arduino IDE no Linux Mint 20.x:**
-Link da Playlist: https://www.youtube.com/playlist?list=PLozhsZB1lLUO6rSiDjyoc5nIlF99-ampo
+<img src="arduino.png" alt="Arduino UNO R3" width="600"/>
 
-![Arduino](arduino.png)
+Arduino é uma plataforma de prototipagem eletrônica de hardware livre e de placa única, projetada com um microcontrolador Atmel AVR com suporte de entrada/saída embutido, uma linguagem de programação padrão, a qual tem origem em Wiring, e é essencialmente C/C++. O objetivo do projeto é criar ferramentas que são acessíveis, com baixo custo, flexíveis e fáceis de se usar por principiantes e profissionais. Principalmente para aqueles que não teriam alcance aos controladores mais sofisticados e ferramentas mais complicadas.
 
-## **INSTALAÇÃO do Arduino IDE no Linux Mint 20.2 Uma x64 Bits**
+Site Oficial do Arduino IDE: https://www.arduino.cc/<br><br>
 
-Vídeo mostrando os procedimentos básicos para instalar a versão do Arduino IDE v1.8.x no Linux Mint 20.2 Uma x64 Bits
+## **Verificando se seu Arduino possui o chip CH-340**
 
-Arduino é uma plataforma de prototipagem eletrônica de hardware livre e de placa única, projetada com um microcontrolador Atmel AVR com suporte de entrada/saída embutido, uma linguagem de programação padrão, a qual tem origem em Wiring, e é essencialmente C/C++. O objetivo do projeto é criar ferramentas que são acessíveis, com baixo custo, flexíveis e fáceis de se usar por principiantes e profissionais. Principalmente para aqueles que não teriam alcance aos controladores mais sofisticados e ferramentas mais complicadas. 
+Antes de prosseguir com a instalação, é necessário verificar se seu Arduino possui ou não o chip CH-340, e então siga o procedimento que corresponde ao modelo do seu Arduino. Abeixo é possível verificar uma foto de cada modelo. <br>
 
-Site Oficial do Arduino IDE: https://www.arduino.cc/<br>
-Site Oficial do BlocklyDuino IDE Plugin: https://github.com/BlocklyDuino/BlocklyDuino_IDE_plugin<br>
-Site Oficial do Fritzing: https://fritzing.org/
+### **Arduino SEM o chip CH-340**
 
-[![Arduino IDE](http://img.youtube.com/vi/n9cRUE3io-Q/0.jpg)](https://www.youtube.com/watch?v=n9cRUE3io-Q "Arduino IDE")
+<img src="arduino-without-CH340.png" alt="Arduino UNO R3 SEM o chip CH-340" width="400"/>
+<br>
 
-Link da vídeo aula: https://www.youtube.com/watch?v=n9cRUE3io-Q
+### **Arduino COM o chip CH-340**
 
-Script utilizado nesse vídeo: https://github.com/vaamonde/arduino/blob/main/install.sh
+<img src="arduino-with-CH340.png" alt="Arduino UNO R3 COM o chip CH-340" width="400"/>
+<br>
 
-## **INSTALAÇÃO do Arduino IDE 2.0.0 BETA no Linux Mint 20.2 Uma x64 Bits**
+## **Procedimento para Arduinos que NÃO possuem o chip CH-340**
 
-Vídeo mostrando os procedimentos básicos para instalar a versão do Arduino IDE v2.0.x BETA no Linux Mint 20.2 Uma x64 Bits
+1 - Navegue até a pasta do projeto pelo terminal e rode o comando:<br><br>
+1.1 - Para a versão 1.8 do Arduino IDE:
 
-Arduino é uma plataforma de prototipagem eletrônica de hardware livre e de placa única, projetada com um microcontrolador Atmel AVR com suporte de entrada/saída embutido, uma linguagem de programação padrão, a qual tem origem em Wiring, e é essencialmente C/C++. O objetivo do projeto é criar ferramentas que são acessíveis, com baixo custo, flexíveis e fáceis de se usar por principiantes e profissionais. Principalmente para aqueles que não teriam alcance aos controladores mais sofisticados e ferramentas mais complicadas. 
+```Bash
+  bash install.sh
+```
 
-A nova versão principal da IDE do Arduino v2.0.0-11 BETA é mais rápida e ainda mais poderosa! Além de um editor mais moderno e uma interface mais ágil, possui preenchimento automático, navegação de código e até mesmo um depurador ao vivo.
+1.2 - Para a versão 2.0 do Arduino IDE:
 
-Site Oficial do Arduino IDE: https://www.arduino.cc/<br>
-Github Oficial do Arduino IDE 2.0 BETA: https://github.com/arduino/arduino-ide<br>
-Site Oficial do Fritzing: https://fritzing.org/
+```Bash
+  bash install20.sh
+```
 
-[![Arduino IDE 2.0](http://img.youtube.com/vi/0K0Fg_WnO9s/0.jpg)](https://www.youtube.com/watch?v=0K0Fg_WnO9s "Arduino IDE 2.0")
+2 - Quando solicitado, digite a senha de Super Usuário;<br>
 
-Link da vídeo aula: https://www.youtube.com/watch?v=0K0Fg_WnO9s
+3 - Aguardo o término da execução do script.
 
-Script utilizado nesse vídeo: https://github.com/vaamonde/arduino/blob/main/install20.sh
+## **Procedimento para Arduinos que possuem o chip CH-340**
+
+1 - Navegue até a pasta do projeto pelo terminal e rode o comando:<br><br>
+1.1 - Para a versão 1.8 do Arduino IDE:
+
+```Bash
+  bash install-CH340.sh
+```
+
+1.2 - Para a versão 2.0 do Arduino IDE:
+
+```Bash
+  bash install20-CH340.sh
+```
+
+2 - Quando solicitado, digite a senha de Super Usuário;<br>
+
+3 - Aguardo o término da execução do script.
